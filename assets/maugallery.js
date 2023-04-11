@@ -153,9 +153,14 @@
           index = i ;
         }
       });
-      next =
-        imagesCollection[index] ||
-        imagesCollection[imagesCollection.length - 1];
+
+      // modification Previous Gallery Modal
+      if (index > 0) {
+        next = imagesCollection[index-1];
+      } else {
+        next = imagesCollection[imagesCollection.length - 1];
+      }
+       
       $(".lightboxImage").attr("src", $(next).attr("src"));
     },
     nextImage() {
@@ -192,7 +197,13 @@
           index = i;
         }
       });
-      next = imagesCollection[index] || imagesCollection[0];
+      
+      //Modification Next Gallery Modal
+      if (index < imagesCollection.length - 1) {
+        next = imagesCollection[index + 1];
+      } else {
+        next = imagesCollection[0];
+      }
       $(".lightboxImage").attr("src", $(next).attr("src"));
     },
     createLightBox(gallery, lightboxId, navigation) {
@@ -235,15 +246,17 @@
         console.error(`Unknown tags position: ${position}`);
       }
     },
+    
+    //modification des filtres pour afficher donner la classe active et activer le :Hover
     filterByTag() {
-      if ($(this).hasClass("active-tag")) {
+      if ($(this).hasClass("active")) {
         return;
       }
-      $(".active-tag").removeClass("active active-tag");
-      $(this).addClass("active-tag");
-
+      $(".active").removeClass("active");
+      $(this).addClass("active");
+    
       var tag = $(this).data("images-toggle");
-
+    
       $(".gallery-item").each(function() {
         $(this)
           .parents(".item-column")
